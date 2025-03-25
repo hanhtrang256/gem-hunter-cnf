@@ -1,9 +1,9 @@
 from util import *
 import random
-grid_width = 5
-grid_height = 5
-num_traps = 7
-num_gems = 3
+grid_width = 6
+grid_height = 6
+num_traps = 10
+num_gems = 8
 
 def get_random(low, high):
     return random.randint(low, high)
@@ -21,24 +21,35 @@ class GRID_GENERATE:
                 grid.append(col)
 
             # Place the traps
-            for i in range(num_traps):
+            cnt = 0
+            while cnt < num_traps:
                 x = get_random(0, grid_height - 1)
                 y = get_random(0, grid_width - 1)
 
                 if grid[x][y] == '_':
                     grid[x][y] = 'T'
-                else:
-                    i -= 1
+                    cnt += 1
+
+            # for i in range(grid_height):
+            #     for j in range(grid_width):
+            #         print(grid[i][j], end="")
+            #     print()
+            # print()
             
             # Place the gems
-            for i in range(num_gems):
+            cnt = 0
+            while cnt < num_gems:
                 x = get_random(0, grid_height - 1)
                 y = get_random(0, grid_width - 1)
 
                 if grid[x][y] == '_':
                     grid[x][y] = 'G'
-                else:
-                    i -= 1
+                    cnt += 1
+
+            # for i in range(grid_height):
+            #     for j in range(grid_width):
+            #         print(grid[i][j], end="")
+            #     print()
             
             # Place the numbers
             for i in range(grid_height):
