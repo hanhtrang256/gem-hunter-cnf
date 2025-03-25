@@ -1,4 +1,5 @@
 from util import *
+import time
 
 # A class for brute-force solution
 # Since we will go through all possible "worlds", which in this game is 2^N cases (N: number of unknown cells)
@@ -7,14 +8,13 @@ from util import *
 class BF_SOLUTION:
     @staticmethod
     def print_solution(grid, grid_w, grid_h, clauses):
+        # Convert the CNF clauses to list of arrays for convenient access
         use_clauses = []
         for i in range(len(clauses)): 
             arr = []
             for j in range(len(clauses[i])):
                 arr.append(clauses[i][j])
             use_clauses.append(arr)
-        
-        # print(use_clauses)
 
         # Get lists of unknown cells
         unk_cells = get_unknown_cells(grid, grid_w, grid_h)
@@ -29,6 +29,7 @@ class BF_SOLUTION:
                     model[get_id(i, j, grid_w)] = False
 
         # Generate all masks
+        start_time = time.time()
         for mask in range(2 ** len(unk_cells)):
             # Reset grid for new-mask assigment
             for index in range(len(unk_cells)): 
@@ -46,11 +47,13 @@ class BF_SOLUTION:
                 else:
                     model[compress_id] = True
 
-            # Early check --> if can early termination
-            early_check = check_clause_model(clauses, model)
+            # Check if found valid model 
+            check = check_clause_model(clauses, model)
 
-            if early_check == 1:
-                print("Complete board solver Brute-Force!")
+            if check == 1:
+                end_time = time.time()
+                time_taken = end_time - start_time
+                print(f'Complete board solver Brute-Force! Time taken BRUTE-FORCE: {time_taken: .6f} seconds!')
                 for i in range(grid_w):
                     for j in range(grid_h):
                         if grid[i][j] == '_':

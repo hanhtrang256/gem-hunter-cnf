@@ -1,13 +1,14 @@
 from util import *
 import random
-grid_width = 6
-grid_height = 6
-num_traps = 10
-num_gems = 8
+grid_width = 20
+grid_height = 20
+num_traps = 180
+num_gems = 20
 
 def get_random(low, high):
     return random.randint(low, high)
 
+# A class to generate a valid map with given size and number of traps, gems. 
 class GRID_GENERATE:
     @staticmethod
     def generate():
@@ -29,12 +30,6 @@ class GRID_GENERATE:
                 if grid[x][y] == '_':
                     grid[x][y] = 'T'
                     cnt += 1
-
-            # for i in range(grid_height):
-            #     for j in range(grid_width):
-            #         print(grid[i][j], end="")
-            #     print()
-            # print()
             
             # Place the gems
             cnt = 0
@@ -46,11 +41,6 @@ class GRID_GENERATE:
                     grid[x][y] = 'G'
                     cnt += 1
 
-            # for i in range(grid_height):
-            #     for j in range(grid_width):
-            #         print(grid[i][j], end="")
-            #     print()
-            
             # Place the numbers
             for i in range(grid_height):
                 for j in range(grid_width):

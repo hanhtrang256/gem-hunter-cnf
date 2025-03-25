@@ -4,6 +4,12 @@ from pysat.formula import CNF
 dx = [-1, -1, -1, 0, 1, 1, 1, 0]
 dy = [-1, 0, 1, 1, 1, 0, -1, -1]
 
+def get_new_model(model):
+    new_model = []
+    for i in range(len(model)):
+        new_model.append(model[i])
+    return new_model
+
 # Reset the grid
 def reset_grid(grid, grid_w, grid_h):
     for i in range(grid_h):
@@ -61,28 +67,6 @@ def get_unknown_cells(grid, grid_w, grid_h):
             if grid[i][j] == '_':
                 unk_cells.append([i, j])
     return unk_cells
-
-# Check if the assignment 'T' or 'G' of position pos is valid
-# We will only check for number cell around the position pos (cause only those are affected)
-# If there exists a neighbor number cell around pos that is finished, and the number of trap is wrong --> invalid assignment
-# A number cell is finished when the surrounding has no '_' left
-def valid_cell(pos, grid, grid_w, grid_h):
-    for k in range(8):
-        x = pos[0] + dx[k]
-        y = pos[1] + dy[k]
-        if (not inside_grid(x, y, grid_w, grid_h)) or (not ('0' <= grid[x][y] <= '9')):
-            continue
-        finished = True
-        num_trap = 0
-        for i in range(8): 
-            if inside_grid(x + dx[i], y + dy[i], grid_w, grid_h):
-                if grid[x + dx[i]][y + dy[i]] == 'T':
-                    num_trap += 1
-                elif grid[x + dx[i]][y + dy[i]] == '_':
-                    finished = False
-        if finished == True and num_trap != (ord(grid[x][y]) - ord('0')):
-            return False
-    return True
 
 # Every clause true -> return 1
 # Some clauses false -> return 0

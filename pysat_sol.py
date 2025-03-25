@@ -1,24 +1,21 @@
 from util import *
 from pysat.solvers import Solver
+import time
 
+# A class that uses the pysat library to solve the CNF clauses
 class PYSAT_SOLUTION:
     @staticmethod
     # Print out solution
     def print_solution(grid, grid_w, grid_h, cnf):
-        # Check for duplicate clauses (in terms of safety only)
-        dup_clause = False
-        for i in range(len(cnf.clauses)):
-            for j in range(i + 1, len(cnf.clauses)):
-                if cnf.clauses[i] == cnf.clauses[j]: 
-                    print("Dup clauses", cnf.clauses[i], cnf.clauses[j])
-
+        start_time = time.time()
         solver = Solver(bootstrap_with = cnf)
         if solver.solve():
             print("Satisfied")
             model = solver.get_model()
-            # print("model", model)
+            end_time = time.time()
 
-            print("Complete board solver CNF!")
+            time_taken = end_time - start_time
+            print(f'Complete board solver CNF! Time taken PYSAT: {time_taken:.6f} seconds!')
             for i in range(grid_h):
                 for j in range(grid_w):
                     if grid[i][j] == '_':

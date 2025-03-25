@@ -1,0 +1,44 @@
+- First test case:
+  + PYSAT: 0.007004 seconds
+    T 1 1 1 1 G 1 T G G T 2 1 2 G 1 1 1 1 G
+    1 1 1 T 1 G 1 G T T T 2 1 T T 1 1 T 1 G
+    G G 1 G 2 1 1 G 3 4 4 2 G 2 2 1 G 2 2 G
+    G G G G 1 T 1 G G T G T G G G G 1 T G G
+    G G 2 1 G 1 1 G 2 4 T G G G G G 1 1 2 1
+    T T T 3 3 2 G G G T T T 2 1 G G G 1 G T
+    2 3 G T T T G G 2 T 4 3 T G G 2 2 G T 2
+    G 1 G 2 G G T 2 G G 2 G G T 3 T T 2 2 2
+    2 T 3 1 G G T 2 G G T 3 T 4 T 4 G 1 1 T
+    2 T 4 T 1 G 2 3 2 G 3 T G 4 T 4 1 G 1 1
+    2 3 T G G 1 3 T T 3 G T 3 G T 4 T 1 G G
+    T G 3 T 3 T 4 T T 3 T 5 T G G T G G G G
+    3 4 T 3 T 4 5 T 3 2 2 T T G G 2 1 G G G
+    T T G G 3 T T G 2 1 G 2 3 3 T 3 2 G G G
+    T 7 T T 3 3 2 1 G T 3 2 G T 4 T T 1 1 G
+    T T T 5 T 1 1 G G G T T 4 4 T 3 G 2 G T
+    G T T G 1 2 G T G G 3 G T T 3 G 1 G T 3
+    G G 4 2 1 2 T T T T 1 G G G 2 T 1 2 T 2
+    G T T 1 1 T G 4 4 G 3 1 G G G 1 1 1 1 1
+    1 G 2 1 G 2 T 1 1 T T 1 G G G G G G G G
+  + Backtrack: 33.482861 seconds
+    T 1 1 1 1 G 1 T T T T 2 1 2 T 1 1 1 1 G 
+    1 1 1 T 1 G 1 G T T T 2 1 T G 1 1 T 1 G 
+    G G 1 G 2 1 1 G 3 4 4 2 G 2 2 1 G 2 2 G
+    T G G G 1 T 1 G G T G T G G T G 1 T G G
+    T G 2 1 G 1 1 G 2 4 T T T G G G 1 1 2 1
+    T T T 3 3 2 G G G T T G 2 1 G G G 1 G T
+    2 3 G T T T G G 2 T 4 3 G G G 2 2 G T 2
+    G 1 G 2 G T G 2 G G 2 T T T 3 T T 2 2 2
+    2 T 3 1 G G T 2 T G G 3 G 4 T 4 G 1 1 T
+    2 T 4 T 1 G 2 3 2 G 3 T G 4 T 4 1 G 1 1
+    2 3 T G G 1 3 T G 3 T T 3 T T 4 T 1 G G
+    T G 3 T 3 T 4 T T 3 T 5 G G G T G G G T
+    3 4 T 3 T 4 5 T 3 2 2 T T G G 2 1 G T T
+    T T G G 3 T T G 2 1 G 2 3 3 T 3 2 G G G
+    T 7 T T 3 3 2 1 G T 3 2 G T 4 T T 1 1 G
+    T T T 5 T 1 1 G G G T T 4 4 T 3 G 2 G T
+    T T T G 1 2 G T T G 3 G T T 3 G 1 G T 3
+    T T 4 2 1 2 T T T T 1 G G G 2 T 1 2 T 2
+    G G T 1 1 T G 4 4 G 3 1 G G G 1 1 1 1 1
+    1 T 2 1 G 2 T 1 1 T T 1 G T G G G G G G
+    
