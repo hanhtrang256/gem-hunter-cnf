@@ -1,4 +1,5 @@
-from util import *
+from grid_function import *
+from cnf_function import *
 import time
 
 # A class for brute-force solution
@@ -6,6 +7,7 @@ import time
 # So I use a bit-generating methods to generate all 2^N possible masks.
 # Define 0 as trap cell (T) and 1 as gem cell (G).
 class BF_SOLUTION:
+    # Print the solution
     @staticmethod
     def print_solution(grid, grid_w, grid_h, clauses):
         # Convert the CNF clauses to list of arrays for convenient access

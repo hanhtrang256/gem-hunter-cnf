@@ -1,4 +1,5 @@
-from util import *
+from grid_function import *
+from cnf_function import *
 from pysat_sol import *
 from brute_force_sol import *
 from backtrack_sol import *

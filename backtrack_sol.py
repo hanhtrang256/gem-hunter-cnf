@@ -1,5 +1,5 @@
-from util import *
-from collections import deque
+from grid_function import *
+from cnf_function import *
 import time
 
 # A class for backtracking solution
@@ -9,7 +9,16 @@ import time
 class BACKTRACK_SOLUTION:
     found = False
 
+    # Get new model for backtracking
+    @staticmethod
+    def get_new_model(model):
+        new_model = []
+        for i in range(len(model)):
+            new_model.append(model[i])
+        return new_model
+
     # Find and return unit clause if exist
+    @staticmethod
     def find_unit_clause(clauses, model):
         unit_clause = None
         for clause in clauses:
@@ -32,6 +41,7 @@ class BACKTRACK_SOLUTION:
         return unit_clause
 
     # Find pure symbols if exist
+    @staticmethod
     def find_pure_symbol(clauses, model):
         pos = [0] * (len(model) + 1)
         neg = [0] * (len(model) + 1)
@@ -57,6 +67,7 @@ class BACKTRACK_SOLUTION:
                 pure_symbols.append(i if pos[i] > 0 else -i)
         return pure_symbols
 
+    # Backtracking
     @staticmethod
     def backtrack(grid, grid_w, grid_h, index, unk_cells, clauses, model):
         # Early check --> if can early termination
@@ -84,7 +95,7 @@ class BACKTRACK_SOLUTION:
         # Unit clause heuristic
         unit_clause = BACKTRACK_SOLUTION.find_unit_clause(clauses, model)
         if unit_clause != None:
-            new_model = get_new_model(model)
+            new_model = BACKTRACK_SOLUTION.get_new_model(model)
             if unit_clause > 0: 
                 new_model[unit_clause] = True
             else:
@@ -96,7 +107,7 @@ class BACKTRACK_SOLUTION:
         # Pure symbol heuristic
         pure_symbols = BACKTRACK_SOLUTION.find_pure_symbol(clauses, model)
         if pure_symbols != []:
-            new_model = get_new_model(model)
+            new_model = BACKTRACK_SOLUTION.get_new_model(model)
             for var in pure_symbols:
                 new_model[abs(var)] = True if var > 0 else False
             res_pure = BACKTRACK_SOLUTION.backtrack(grid, grid_w, grid_h, index, unk_cells, clauses, new_model)
@@ -112,7 +123,7 @@ class BACKTRACK_SOLUTION:
         
         # Try T if not yet found solution
         if BACKTRACK_SOLUTION.found == False:
-            new_model = get_new_model(model)
+            new_model = BACKTRACK_SOLUTION.get_new_model(model)
             new_model[compress_id] = True 
             res_T = BACKTRACK_SOLUTION.backtrack(grid, grid_w, grid_h, index + 1, unk_cells, clauses, new_model)
 
@@ -121,7 +132,7 @@ class BACKTRACK_SOLUTION:
 
         # Try G if not yet found solution
         if BACKTRACK_SOLUTION.found == False:
-            new_model = get_new_model(model)
+            new_model = BACKTRACK_SOLUTION.get_new_model(model)
             new_model[compress_id] = False 
             res_G = BACKTRACK_SOLUTION.backtrack(grid, grid_w, grid_h, index + 1, unk_cells, clauses, new_model)
 
@@ -130,6 +141,7 @@ class BACKTRACK_SOLUTION:
 
         return BACKTRACK_SOLUTION.found
     
+    # Print the solution
     @staticmethod
     def print_solution(grid, grid_w, grid_h, clauses):
         # Convert the CNF clauses to list of arrays for convenient access
@@ -139,8 +151,6 @@ class BACKTRACK_SOLUTION:
             for j in range(len(clauses[i])):
                 arr.append(clauses[i][j])
             use_clauses.append(arr)
-
-        # print(use_clauses)
 
         # Get lists of unknown cells
         unk_cells = get_unknown_cells(grid, grid_w, grid_h)

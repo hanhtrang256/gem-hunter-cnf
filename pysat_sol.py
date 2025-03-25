@@ -1,4 +1,5 @@
-from util import *
+from grid_function import *
+from cnf_function import *
 from pysat.solvers import Solver
 import time
 
