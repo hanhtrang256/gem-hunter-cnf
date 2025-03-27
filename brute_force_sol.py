@@ -8,7 +8,6 @@ import time
 # Define 0 as trap cell (T) and 1 as gem cell (G).
 class BF_SOLUTION:
     # Print the solution
-    @staticmethod
     def print_solution(grid, grid_w, grid_h, clauses, fout):
         if grid_w > 6 and grid_h > 6:
             fout.write("Brute force took too long to solve!\n")
@@ -53,7 +52,7 @@ class BF_SOLUTION:
 
             if check == 1:
                 end_time = time.time()
-                time_taken = end_time - start_time
+                time_taken = (end_time - start_time) * 1000
                 fout.write("Complete board solver by Brute-Force!\n")
                 for i in range(grid_w):
                     for j in range(grid_h):
@@ -65,7 +64,7 @@ class BF_SOLUTION:
                                 grid[i][j] = 'T'
                         fout.write(grid[i][j] + ' ')
                     fout.write("\n")
-                fout.write(f'Time taken BRUTE-FORCE: {time_taken: .6f} seconds!\n')
+                fout.write(f'{time_taken:.4f} ms!\n')
                 return
 
         # In case there is no solution

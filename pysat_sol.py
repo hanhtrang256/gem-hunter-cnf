@@ -5,7 +5,6 @@ import time
 
 # A class that uses the pysat library to solve the CNF clauses
 class PYSAT_SOLUTION:
-    @staticmethod
     # Print out solution
     def print_solution(grid, grid_w, grid_h, cnf, fout):
         start_time = time.time()
@@ -15,7 +14,7 @@ class PYSAT_SOLUTION:
             model = solver.get_model()
             end_time = time.time()
 
-            time_taken = end_time - start_time
+            time_taken = (end_time - start_time) * 1000
             fout.write("Complete board solver by PYSAT!\n")
             for i in range(grid_h):
                 for j in range(grid_w):
@@ -28,7 +27,7 @@ class PYSAT_SOLUTION:
                             grid[i][j] = 'G'
                     fout.write(grid[i][j] + ' ')
                 fout.write("\n")
-            fout.write(f'Time taken PYSAT: {time_taken:.6f} seconds!\n')
+            fout.write(f'{time_taken:.4f} ms!\n')
         else:
             fout.write("PYSAT cannot find solution. Unsatisfied CNF!\n")
 

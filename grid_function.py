@@ -4,9 +4,9 @@ dy = [-1, 0, 1, 1, 1, 0, -1, -1]
 
 # Read the grid from file
 def read_grid_file(filename):
+    grid = []
     with open(str(filename)) as f:
         row, col = [int(x) for x in next(f).split()] # Read number of rows and columns at first line
-        grid = []
         for line in f:
             grid.append([x for x in line.split()]) # Read each element of grid
     return grid

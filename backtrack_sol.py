@@ -10,7 +10,6 @@ class BACKTRACK_SOLUTION:
     found = False # found = True => solution has been found --> no further search needed.
 
     # Get new model for backtracking
-    @staticmethod
     def get_new_model(model):
         new_model = []
         for i in range(len(model)):
@@ -18,7 +17,6 @@ class BACKTRACK_SOLUTION:
         return new_model
 
     # Find and return unit clause if exist
-    @staticmethod
     def find_unit_clause(clauses, model):
         unit_clause = None
         for clause in clauses:
@@ -41,7 +39,6 @@ class BACKTRACK_SOLUTION:
         return unit_clause
 
     # Find pure symbols if exist
-    @staticmethod
     def find_pure_symbol(clauses, model):
         pos = [0] * (len(model) + 1)
         neg = [0] * (len(model) + 1)
@@ -68,7 +65,6 @@ class BACKTRACK_SOLUTION:
         return pure_symbols
 
     # Backtracking
-    @staticmethod
     def backtrack(grid, grid_w, grid_h, index, unk_cells, clauses, model, fout):
         # Early check --> if can early termination
         early_check = check_clause_model(clauses, model)
@@ -88,7 +84,7 @@ class BACKTRACK_SOLUTION:
                             grid[i][j] = 'T'
                     fout.write(grid[i][j] + ' ')
                 fout.write('\n')
-            check_valid_grid(grid, grid_w, grid_h, 2)
+            # check_valid_grid(grid, grid_w, grid_h, 2)
 
             return True
 
@@ -142,8 +138,8 @@ class BACKTRACK_SOLUTION:
         return BACKTRACK_SOLUTION.found
     
     # Print the solution
-    @staticmethod
     def print_solution(grid, grid_w, grid_h, clauses, fout):
+        BACKTRACK_SOLUTION.found = False
         # Convert the CNF clauses to lists of arrays for convenient usage
         use_clauses = []
         for i in range(len(clauses)): 
@@ -165,5 +161,5 @@ class BACKTRACK_SOLUTION:
         start_time = time.time()
         found_sol = BACKTRACK_SOLUTION.backtrack(grid, grid_w, grid_h, 0, unk_cells, use_clauses, model, fout)
         end_time = time.time()
-        time_taken = end_time - start_time
-        fout.write(f'Time taken BACKTRACK: {time_taken:.6f} seconds!\n')
+        time_taken = (end_time - start_time) * 1000
+        fout.write(f'{time_taken:.4f} ms!\n')
