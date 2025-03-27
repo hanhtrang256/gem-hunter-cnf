@@ -95,6 +95,7 @@ def generate_CNF(grid, grid_w, grid_h):
     return cnf
 
 # Optimize the CNF clauses by assigning some known information in the knowledge base
+# and delete the clauses that are already true
 def optimize_clause(grid, grid_w, grid_h, clauses, model):
     clauses_contain = [[]] * (grid_w * grid_h + 2)
     deleted = [False] * (len(clauses) + 2)

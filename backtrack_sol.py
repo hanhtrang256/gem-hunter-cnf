@@ -7,7 +7,7 @@ import time
 # If early invalid/valid (clauses/model) => return
 # This backtrack solution will not continue assigning after it has found the first solution
 class BACKTRACK_SOLUTION:
-    found = False
+    found = False # found = True => solution has been found --> no further search needed.
 
     # Get new model for backtracking
     @staticmethod
@@ -92,7 +92,7 @@ class BACKTRACK_SOLUTION:
 
             return True
 
-        # Unit clause heuristic
+        # Unit clause heuristic (propagation if possible)
         unit_clause = BACKTRACK_SOLUTION.find_unit_clause(clauses, model)
         if unit_clause != None:
             new_model = BACKTRACK_SOLUTION.get_new_model(model)
@@ -144,7 +144,7 @@ class BACKTRACK_SOLUTION:
     # Print the solution
     @staticmethod
     def print_solution(grid, grid_w, grid_h, clauses, fout):
-        # Convert the CNF clauses to list of arrays for convenient access
+        # Convert the CNF clauses to lists of arrays for convenient usage
         use_clauses = []
         for i in range(len(clauses)): 
             arr = []
@@ -156,8 +156,10 @@ class BACKTRACK_SOLUTION:
         unk_cells = get_unknown_cells(grid, grid_w, grid_h)
         num_unk_cell = len(unk_cells)
 
+        # Initialize model
         model = [None] * (grid_w * grid_h + 1)
 
+        # Delete unnecessary clauses
         use_clauses = optimize_clause(grid, grid_w, grid_h, use_clauses, model)
         
         start_time = time.time()

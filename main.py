@@ -10,10 +10,6 @@ id_file = 6
 grid = read_grid_file(f'testcases/input_{id_file}.txt')
 grid_h = len(grid)
 grid_w = len(grid[0]) 
-
-print("Grid generated!")
-# Reset grid to run algorithm
-reset_grid(grid, grid_w, grid_h)
 print_grid(grid, grid_w, grid_h)
 
 # Generate the CNF clauses. Duplicate clauses are removed inside the function.

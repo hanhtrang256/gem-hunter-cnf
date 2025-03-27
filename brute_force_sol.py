@@ -13,7 +13,7 @@ class BF_SOLUTION:
         if grid_w > 6 and grid_h > 6:
             fout.write("Brute force took too long to solve!\n")
             return
-        # Convert the CNF clauses to list of arrays for convenient access
+        # Convert the CNF clauses to list of arrays for convenient usage
         use_clauses = []
         for i in range(len(clauses)): 
             arr = []
@@ -25,10 +25,11 @@ class BF_SOLUTION:
         unk_cells = get_unknown_cells(grid, grid_w, grid_h)
         num_unk_cell = len(unk_cells)
 
+        # Initialize model
         model = [None] * (grid_w * grid_h + 1)
         
+        # Delete unnecessary clauses
         use_clauses = optimize_clause(grid, grid_w, grid_h, use_clauses, model)
-        # print("Reduce number of clauses to", len(use_clauses))
 
         # Generate all masks
         start_time = time.time()
