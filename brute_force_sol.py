@@ -9,7 +9,10 @@ import time
 class BF_SOLUTION:
     # Print the solution
     @staticmethod
-    def print_solution(grid, grid_w, grid_h, clauses):
+    def print_solution(grid, grid_w, grid_h, clauses, fout):
+        if grid_w > 6 and grid_h > 6:
+            fout.write("Brute force took too long to solve!\n")
+            return
         # Convert the CNF clauses to list of arrays for convenient access
         use_clauses = []
         for i in range(len(clauses)): 
@@ -23,31 +26,26 @@ class BF_SOLUTION:
         num_unk_cell = len(unk_cells)
 
         model = [None] * (grid_w * grid_h + 1)
-
-        # Preassign the known variables first (number cell is obviously not a trap)
-        for i in range(grid_h):
-            for j in range(grid_w):
-                if '0' <= grid[i][j] <= '9':
-                    model[get_id(i, j, grid_w)] = False
+        
+        use_clauses = optimize_clause(grid, grid_w, grid_h, use_clauses, model)
+        # print("Reduce number of clauses to", len(use_clauses))
 
         # Generate all masks
         start_time = time.time()
-        for mask in range(2 ** len(unk_cells)):
+        for mask in range(2 ** len(unk_cells) - 1, -1, -1):
             # Reset grid for new-mask assigment
             for index in range(len(unk_cells)): 
                 pos = unk_cells[index]
                 model[get_id(pos[0], pos[1], grid_w)] = None
-
-            valid_assignment = True
 
             # Assign variables based on current mask
             for index in range(len(unk_cells)):
                 pos = unk_cells[index]
                 compress_id = get_id(pos[0], pos[1], grid_w)
                 if (mask & (1 << index)) > 0:
-                    model[compress_id] = False
-                else:
                     model[compress_id] = True
+                else:
+                    model[compress_id] = False
 
             # Check if found valid model 
             check = check_clause_model(clauses, model)
@@ -55,7 +53,7 @@ class BF_SOLUTION:
             if check == 1:
                 end_time = time.time()
                 time_taken = end_time - start_time
-                print(f'Complete board solver Brute-Force! Time taken BRUTE-FORCE: {time_taken: .6f} seconds!')
+                fout.write("Complete board solver by Brute-Force!\n")
                 for i in range(grid_w):
                     for j in range(grid_h):
                         if grid[i][j] == '_':
@@ -64,8 +62,10 @@ class BF_SOLUTION:
                                 grid[i][j] = 'G'
                             elif model[compress_id] == True:
                                 grid[i][j] = 'T'
-                print_grid(grid, grid_w, grid_h)
+                        fout.write(grid[i][j] + ' ')
+                    fout.write("\n")
+                fout.write(f'Time taken BRUTE-FORCE: {time_taken: .6f} seconds!\n')
                 return
 
         # In case there is no solution
-        print("Brute-force cannot find any valid combinations!")
+        fout.write("Brute-force cannot find any valid combinations!\n")

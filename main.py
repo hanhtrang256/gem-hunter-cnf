@@ -5,25 +5,11 @@ from brute_force_sol import *
 from backtrack_sol import *
 from grid_generate import *
 
-# Generate a random grid
-grid = GRID_GENERATE.generate()
-# grid = [['_', '_', '3', '_', '1'], 
-#         ['_', '_', '4', '2', '1'],
-#         ['_', '4', '_', '3', '1'],
-#         ['3', '_', '_', '4', '_'],
-#         ['_', '_', '_', '_', '_']]
-
-# grid = [['_', '_', '1', '1'], 
-#         ['_', '_', '_', '_'],
-#         ['2', '_', '4', '2'],
-#         ['2', '_', '_', '_']]
-
-# grid = [['_', '1', '_'], 
-#         ['1', '_', '1'],
-#         ['_', '_', '_']]
-
+# Read grid from file
+id_file = 6
+grid = read_grid_file(f'testcases/input_{id_file}.txt')
 grid_h = len(grid)
-grid_w = len(grid[0])
+grid_w = len(grid[0]) 
 
 print("Grid generated!")
 # Reset grid to run algorithm
@@ -34,17 +20,21 @@ print_grid(grid, grid_w, grid_h)
 cnf = generate_CNF(grid, grid_w, grid_h)
 
 print("# Number of clauses", len(cnf.clauses))
-    
+
+fout = open(str(f'testcases/output_{id_file}.txt'), "a")
 # Solution using CNF and pysat to infer the result
-PYSAT_SOLUTION.print_solution(grid, grid_w, grid_h, cnf)
+PYSAT_SOLUTION.print_solution(grid, grid_w, grid_h, cnf, fout)
 check_valid_grid(grid, grid_w, grid_h, 0)
 reset_grid(grid, grid_w, grid_h)
+fout.write("\n")
 
 # Solution using Backtracking algorithm - check valid grid is in backtrack function
-BACKTRACK_SOLUTION.print_solution(grid, grid_w, grid_h, cnf.clauses)
+BACKTRACK_SOLUTION.print_solution(grid, grid_w, grid_h, cnf.clauses, fout)
 reset_grid(grid, grid_w, grid_h)
+fout.write("\n")
 
 # Solution using Brute-Force algorithm
-# BF_SOLUTION.print_solution(grid, grid_w, grid_h, cnf.clauses)
-# check_valid_grid(grid, grid_w, grid_h, 1)
+BF_SOLUTION.print_solution(grid, grid_w, grid_h, cnf.clauses, fout)
+check_valid_grid(grid, grid_w, grid_h, 1)
 
+fout.close()

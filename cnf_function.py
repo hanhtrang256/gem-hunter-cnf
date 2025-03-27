@@ -32,6 +32,8 @@ def check_clause_model(clauses, model):
     # ∀ clauses are finished and no false clause --> result found --> return True 
     if not_sure == False:
         return 1
+
+    # Not decideable
     return -1
 
 # Get new disjunction at position (i, j)
@@ -91,3 +93,41 @@ def generate_CNF(grid, grid_w, grid_h):
     seen = set()
     cnf.clauses = [clause for clause in cnf.clauses if frozenset(clause) not in seen and not seen.add(frozenset(clause))]
     return cnf
+
+# Optimize the CNF clauses by assigning some known information in the knowledge base
+def optimize_clause(grid, grid_w, grid_h, clauses, model):
+    clauses_contain = [[]] * (grid_w * grid_h + 2)
+    deleted = [False] * (len(clauses) + 2)
+
+    for i in range(len(clauses)):
+        for var in clauses[i]:
+            clauses_contain[abs(var)].append(i)
+
+    # Preassign the known variables first (number cell is obviously not a trap)
+    for i in range(grid_h):
+        for j in range(grid_w):
+            if '0' <= grid[i][j] <= '9':
+                element = get_id(i, j, grid_w)
+                model[element] = False
+                for id in clauses_contain[element]:
+                    if deleted[id] == True:
+                        continue
+                    hasTrue = False
+                    for var in clauses[id]:
+                        if (var < 0 and model[-var] == False) or (var > 0 and model[var] == True): 
+                            hasTrue = True
+                            break
+                    if hasTrue == True:
+                        deleted[id] = True
+    
+    # New clause
+    new_clause = [] 
+    for i in range(len(clauses)): 
+        if deleted[i]:
+            continue
+        clause = []
+        for var in clauses[i]:
+            clause.append(var)
+        new_clause.append(clause)
+    
+    return new_clause

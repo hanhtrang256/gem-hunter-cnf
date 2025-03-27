@@ -69,7 +69,7 @@ class BACKTRACK_SOLUTION:
 
     # Backtracking
     @staticmethod
-    def backtrack(grid, grid_w, grid_h, index, unk_cells, clauses, model):
+    def backtrack(grid, grid_w, grid_h, index, unk_cells, clauses, model, fout):
         # Early check --> if can early termination
         early_check = check_clause_model(clauses, model)
         if early_check == 0:
@@ -77,7 +77,7 @@ class BACKTRACK_SOLUTION:
 
         if early_check == 1:
             BACKTRACK_SOLUTION.found = True
-            
+            fout.write("Complete board solver by Backtrack!\n")
             for i in range(grid_h):
                 for j in range(grid_w): 
                     if grid[i][j] == '_': 
@@ -86,8 +86,8 @@ class BACKTRACK_SOLUTION:
                             grid[i][j] = 'G'
                         elif model[compress_id] == True:
                             grid[i][j] = 'T'
-            
-            print_grid(grid, grid_w, grid_h)
+                    fout.write(grid[i][j] + ' ')
+                fout.write('\n')
             check_valid_grid(grid, grid_w, grid_h, 2)
 
             return True
@@ -101,7 +101,7 @@ class BACKTRACK_SOLUTION:
             else:
                 new_model[-unit_clause] = False
             
-            res_unit = BACKTRACK_SOLUTION.backtrack(grid, grid_w, grid_h, index, unk_cells, clauses, new_model)
+            res_unit = BACKTRACK_SOLUTION.backtrack(grid, grid_w, grid_h, index, unk_cells, clauses, new_model, fout)
             return res_unit
 
         # Pure symbol heuristic
@@ -110,7 +110,7 @@ class BACKTRACK_SOLUTION:
             new_model = BACKTRACK_SOLUTION.get_new_model(model)
             for var in pure_symbols:
                 new_model[abs(var)] = True if var > 0 else False
-            res_pure = BACKTRACK_SOLUTION.backtrack(grid, grid_w, grid_h, index, unk_cells, clauses, new_model)
+            res_pure = BACKTRACK_SOLUTION.backtrack(grid, grid_w, grid_h, index, unk_cells, clauses, new_model, fout)
 
         # Get id of position
         pos = unk_cells[index]
@@ -118,14 +118,14 @@ class BACKTRACK_SOLUTION:
 
         # If already assigned by previous heuristic usage
         if model[compress_id] != None:
-            res_already = BACKTRACK_SOLUTION.backtrack(grid, grid_w, grid_h, index + 1, unk_cells, clauses, model)
+            res_already = BACKTRACK_SOLUTION.backtrack(grid, grid_w, grid_h, index + 1, unk_cells, clauses, model, fout)
             return res_already
         
         # Try T if not yet found solution
         if BACKTRACK_SOLUTION.found == False:
             new_model = BACKTRACK_SOLUTION.get_new_model(model)
             new_model[compress_id] = True 
-            res_T = BACKTRACK_SOLUTION.backtrack(grid, grid_w, grid_h, index + 1, unk_cells, clauses, new_model)
+            res_T = BACKTRACK_SOLUTION.backtrack(grid, grid_w, grid_h, index + 1, unk_cells, clauses, new_model, fout)
 
             if res_T:
                 return True
@@ -134,7 +134,7 @@ class BACKTRACK_SOLUTION:
         if BACKTRACK_SOLUTION.found == False:
             new_model = BACKTRACK_SOLUTION.get_new_model(model)
             new_model[compress_id] = False 
-            res_G = BACKTRACK_SOLUTION.backtrack(grid, grid_w, grid_h, index + 1, unk_cells, clauses, new_model)
+            res_G = BACKTRACK_SOLUTION.backtrack(grid, grid_w, grid_h, index + 1, unk_cells, clauses, new_model, fout)
 
             if res_G:
                 return True
@@ -143,7 +143,7 @@ class BACKTRACK_SOLUTION:
     
     # Print the solution
     @staticmethod
-    def print_solution(grid, grid_w, grid_h, clauses):
+    def print_solution(grid, grid_w, grid_h, clauses, fout):
         # Convert the CNF clauses to list of arrays for convenient access
         use_clauses = []
         for i in range(len(clauses)): 
@@ -158,16 +158,10 @@ class BACKTRACK_SOLUTION:
 
         model = [None] * (grid_w * grid_h + 1)
 
-        # Preassign the known variables first (number cell is obviously not a trap)
-        for i in range(grid_h):
-            for j in range(grid_w):
-                if '0' <= grid[i][j] <= '9':
-                    model[get_id(i, j, grid_w)] = False
+        use_clauses = optimize_clause(grid, grid_w, grid_h, use_clauses, model)
+        
         start_time = time.time()
-        found_sol = BACKTRACK_SOLUTION.backtrack(grid, grid_w, grid_h, 0, unk_cells, use_clauses, model)
+        found_sol = BACKTRACK_SOLUTION.backtrack(grid, grid_w, grid_h, 0, unk_cells, use_clauses, model, fout)
         end_time = time.time()
         time_taken = end_time - start_time
-        if found_sol:
-            print(f'Backtrack found a solution! Time taken BACKTRACK: {time_taken:.6f} seconds!')
-        else:
-            print("Backtrack cannot find a solution")
+        fout.write(f'Time taken BACKTRACK: {time_taken:.6f} seconds!\n')

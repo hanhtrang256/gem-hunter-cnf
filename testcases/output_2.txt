@@ -1,0 +1,26 @@
+Complete board solver by PYSAT!
+T T T 5 T G 
+4 T T T T G 
+G T 6 T T G 
+2 2 G T T 2 
+T 3 4 5 4 2 
+2 T T T T G 
+Time taken PYSAT: 0.000000 seconds!
+
+Complete board solver by Backtrack!
+T T T 5 T T 
+4 T T T T T 
+G T 6 T T G 
+2 2 G T T 2 
+T 3 4 5 4 2 
+2 T T T T G 
+Time taken BACKTRACK: 0.004562 seconds!
+
+Complete board solver by Brute-Force!
+T T T 5 T T 
+4 T T T T T 
+G T 6 T G T 
+2 2 G T T 2 
+T 3 4 5 4 2 
+2 T T T T G 
+Time taken BRUTE-FORCE:  53.584676 seconds!

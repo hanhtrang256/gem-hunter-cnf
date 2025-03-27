@@ -2,6 +2,14 @@
 dx = [-1, -1, -1, 0, 1, 1, 1, 0]
 dy = [-1, 0, 1, 1, 1, 0, -1, -1]
 
+def read_grid_file(filename):
+    with open(str(filename)) as f:
+        row, col = [int(x) for x in next(f).split()] # Read number of rows and columns at first line
+        grid = []
+        for line in f:
+            grid.append([x for x in line.split()])
+    return grid
+
 # Reset the grid
 def reset_grid(grid, grid_w, grid_h):
     for i in range(grid_h):
@@ -18,6 +26,9 @@ def print_grid(grid, grid_w, grid_h):
 
 # Check valid grid
 def check_valid_grid(grid, grid_w, grid_h, algo_id):
+    if algo_id == 1 and grid_w > 6 and grid_h > 6:
+        print("Brute Force took too long")
+        return
     checked = []
     for i in range(grid_h):
         for j in range(grid_w):
@@ -29,17 +40,16 @@ def check_valid_grid(grid, grid_w, grid_h, algo_id):
                     trap_cnt += 1
             if trap_cnt != (ord(grid[i][j]) - ord('0')):
                 checked = [i, j]
+    if algo_id == 0:
+        print("Pysat", end=" ")
+    elif algo_id == 1:
+        print("Brute Force", end=" ")
+    else:
+        print("Backtracking", end=" ")
     if checked != []:
-        if algo_id == 0:
-            print("CNF wrong", checked)
-            return
-        elif algo_id == 1:
-            print("Brute Force wrong", checked)
-            return
-        else:
-            print("Backtracking wrong", checked)
-            return
-    print("Correct")
+        print("wrong", checked)
+        return
+    print("finished and is correct!")
 
 # Return id of a position in based 1
 def get_id(x, y, grid_w): 

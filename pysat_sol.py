@@ -7,16 +7,16 @@ import time
 class PYSAT_SOLUTION:
     @staticmethod
     # Print out solution
-    def print_solution(grid, grid_w, grid_h, cnf):
+    def print_solution(grid, grid_w, grid_h, cnf, fout):
         start_time = time.time()
         solver = Solver(bootstrap_with = cnf)
         if solver.solve():
-            print("Satisfied")
+            # print("Satisfied")
             model = solver.get_model()
             end_time = time.time()
 
             time_taken = end_time - start_time
-            print(f'Complete board solver CNF! Time taken PYSAT: {time_taken:.6f} seconds!')
+            fout.write("Complete board solver by PYSAT!\n")
             for i in range(grid_h):
                 for j in range(grid_w):
                     if grid[i][j] == '_':
@@ -26,9 +26,10 @@ class PYSAT_SOLUTION:
                             grid[i][j] = 'G'
                         else:
                             grid[i][j] = 'G'
-                    print(grid[i][j], end = " ")
-                print()
+                    fout.write(grid[i][j] + ' ')
+                fout.write("\n")
+            fout.write(f'Time taken PYSAT: {time_taken:.6f} seconds!\n')
         else:
-            print("Unsatisfied")
+            fout.write("PYSAT cannot find solution. Unsatisfied CNF!\n")
 
 

@@ -1,9 +1,9 @@
 from grid_function import *
 import random
-grid_width = 20
-grid_height = 20
-num_traps = 180
-num_gems = 20
+grid_width = 30
+grid_height = 30
+num_traps = 200
+num_gems = 250
 
 def get_random(low, high):
     return random.randint(low, high)
