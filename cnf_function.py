@@ -36,6 +36,23 @@ def check_clause_model(clauses, model):
     # Not decideable
     return -1
 
+# Check if the clauses is true in the current mask (a model)
+def check_clause_mask(clauses, mask, empty_id):
+    for clause in clauses:
+        hasTrue = False
+        for literal in clause:
+            if empty_id[abs(literal)] == None:
+                continue
+            if literal > 0 and (mask & (1 << empty_id[literal]) > 0):
+                hasTrue = True
+                break
+            elif literal < 0 and not (mask & (1 << empty_id[-literal])):
+                hasTrue = True
+                break
+        if not hasTrue:
+            return False
+    return True
+
 # Get new disjunction at position (i, j)
 def get_new_disjunc(i, j, mask, bit_want, sign, grid_w, grid_h):
     if mask.bit_count() != bit_want:

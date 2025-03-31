@@ -161,5 +161,7 @@ class BACKTRACK_SOLUTION:
         start_time = time.time()
         found_sol = BACKTRACK_SOLUTION.backtrack(grid, grid_w, grid_h, 0, unk_cells, use_clauses, model, fout)
         end_time = time.time()
-        time_taken = (end_time - start_time) * 1000
+        time_taken = end_time - start_time
+        # print(f"Time taken {time_taken:.4f} second")
+        time_taken *= 1000
         fout.write(f'{time_taken:.4f} ms!\n')

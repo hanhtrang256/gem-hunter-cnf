@@ -12,7 +12,7 @@ G T T G 2 G G T G 1
 1 G T 3 G G T G 2 G 
 G 1 3 T G T T 2 1 T 
 G G G T 3 2 2 G 1 G 
-1.9152 ms!
+0.0000 ms!
 
 Complete board solver by Backtrack!
 G 1 G T 1 G T G G T 
@@ -25,6 +25,6 @@ T G T G 2 G T T T 1
 1 G T 3 G G T G 2 G 
 G 1 3 T G T T 2 1 G 
 G G G T 3 2 2 G 1 T 
-52.6602 ms!
+58.3568 ms!
 
-Brute force took too long to solve!
+Brute Force took too long to solve!

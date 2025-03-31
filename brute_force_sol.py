@@ -5,13 +5,15 @@ import time
 # A class for brute-force solution
 # Since we will go through all possible "worlds", which in this game is 2^N cases (N: number of unknown cells)
 # So I use a bit-generating methods to generate all 2^N possible masks.
-# Define 0 as trap cell (T) and 1 as gem cell (G).
+# Define 1 as trap cell (T) and 0 as gem cell (G).
 class BF_SOLUTION:
-    # Print the solution
-    def print_solution(grid, grid_w, grid_h, clauses, fout):
-        if grid_w > 6 and grid_h > 6:
-            fout.write("Brute force took too long to solve!\n")
-            return
+    def next_mask(x):
+        smallest = x & -x  
+        ripple = x + smallest
+        new_mask = (((ripple ^ x) >> 2) // smallest) | ripple
+        return new_mask
+
+    def print_solution(grid, grid_w, grid_h, clauses, fout): 
         # Convert the CNF clauses to list of arrays for convenient usage
         use_clauses = []
         for i in range(len(clauses)): 
@@ -24,48 +26,43 @@ class BF_SOLUTION:
         unk_cells = get_unknown_cells(grid, grid_w, grid_h)
         num_unk_cell = len(unk_cells)
 
-        # Initialize model
-        model = [None] * (grid_w * grid_h + 1)
+        if num_unk_cell > 25:
+            fout.write("Brute Force took too long to solve!\n")
+            return
+
+        model = [None] * (grid_w * grid_h + 2)
         
         # Delete unnecessary clauses
         use_clauses = optimize_clause(grid, grid_w, grid_h, use_clauses, model)
 
-        # Generate all masks
+        empty_id = [None] * (grid_w * grid_h + 2)
+        id = 0
+        for i in range(grid_h):
+            for j in range(grid_w):
+                if grid[i][j] == '_': 
+                    empty_id[get_id(i, j, grid_w)] = id
+                    id += 1
+
         start_time = time.time()
-        for mask in range(2 ** len(unk_cells) - 1, -1, -1):
-            # Reset grid for new-mask assigment
-            for index in range(len(unk_cells)): 
-                pos = unk_cells[index]
-                model[get_id(pos[0], pos[1], grid_w)] = None
-
-            # Assign variables based on current mask
-            for index in range(len(unk_cells)):
-                pos = unk_cells[index]
-                compress_id = get_id(pos[0], pos[1], grid_w)
-                if (mask & (1 << index)) > 0:
-                    model[compress_id] = True
-                else:
-                    model[compress_id] = False
-
-            # Check if found valid model 
-            check = check_clause_model(clauses, model)
-
-            if check == 1:
-                end_time = time.time()
-                time_taken = (end_time - start_time) * 1000
-                fout.write("Complete board solver by Brute-Force!\n")
-                for i in range(grid_w):
-                    for j in range(grid_h):
-                        if grid[i][j] == '_':
-                            compress_id = get_id(i, j, grid_w)
-                            if model[compress_id] == None or model[compress_id] == False:
-                                grid[i][j] = 'G'
-                            elif model[compress_id] == True:
-                                grid[i][j] = 'T'
-                        fout.write(grid[i][j] + ' ')
-                    fout.write("\n")
-                fout.write(f'{time_taken:.4f} ms!\n')
-                return
-
+        for num_traps in range(num_unk_cell, - 1, -1):
+            mask = (1 << num_traps) - 1
+            while mask < (1 << num_unk_cell):
+                if check_clause_mask(use_clauses, mask, empty_id):
+                    fout.write("Complete board solver by Brute-Force!\n")
+                    end_time = time.time()
+                    time_taken = (end_time - start_time) * 1000
+                    for i in range(grid_w):
+                        for j in range(grid_h):
+                            if grid[i][j] == '_':
+                                compress_id = get_id(i, j, grid_w)
+                                if not (mask & (1 << empty_id[compress_id])):
+                                    grid[i][j] = 'G'
+                                elif (mask & (1 << empty_id[compress_id])):
+                                    grid[i][j] = 'T'
+                            fout.write(grid[i][j] + ' ')
+                        fout.write("\n")
+                    fout.write(f'{time_taken:.4f} ms!\n')
+                    return
+                mask = BF_SOLUTION.next_mask(mask)
         # In case there is no solution
         fout.write("Brute-force cannot find any valid combinations!\n")

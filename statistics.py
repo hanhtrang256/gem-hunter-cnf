@@ -42,6 +42,7 @@ def show_experiments():
     fout = open("statistics.txt", "w")
     fout.write("|    Grid size    |    # Clauses    |    # Empty cells    |     Algorithm     |    Time         |\n")
     print_header_line(fout)
+    print_header_line(fout)
     # Read each output file
     for i in range(1, main.NFILE + 1):
         with open(str(f'testcases/output_{i}.txt')) as f:
