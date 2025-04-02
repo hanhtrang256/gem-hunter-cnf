@@ -44,7 +44,7 @@ def solve(id_file):
     reset_grid(grid, grid_w, grid_h)
 
     fout.close()
-    print("-> Done!\n")
+    print("-> Done!")
 
 if len(sys.argv) >= 2: 
     get_id_argv = sys.argv[1]

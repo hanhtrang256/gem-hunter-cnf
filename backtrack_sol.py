@@ -40,8 +40,8 @@ class BACKTRACK_SOLUTION:
 
     # Find pure symbols if exist
     def find_pure_symbol(clauses, model):
-        pos = [0] * (len(model) + 1)
-        neg = [0] * (len(model) + 1)
+        pos = [0] * (len(model) + 2)
+        neg = [0] * (len(model) + 2)
         unfinished = 0
         for clause in clauses:
             finished = False
