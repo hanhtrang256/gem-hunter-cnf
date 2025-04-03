@@ -65,6 +65,6 @@ T G 1 1 2 2 G 1 2 2 G T G 4 G T 4 G G G 2 3 T 1 G G G G 2 G
 T G G G G G G G G T 2 3 T 2 2 T T 3 1 1 G 1 G 1 G G T G G G 
 T T G 2 T T 1 1 2 G G 2 T 2 1 G T 4 T 1 1 G 1 G G 1 G 2 1 G 
 G G 1 G T G 1 1 T 1 G 1 G G G 2 T 3 1 1 1 T G G G G G 1 T G 
-7043.1139 ms!
+6849.3955 ms!
 
 Brute Force took too long to solve!

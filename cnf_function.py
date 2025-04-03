@@ -101,7 +101,7 @@ def generate_CNF(grid, grid_w, grid_h):
                 if new_disjunc != []:
                     cnf.append(new_disjunc)
                 # Find CNF "at most #num_trap traps"
-                # This sentence is a negation of "at lease #num_trap trap cells"
+                # This sentence is a negation of "at least #num_trap+1 trap cells"
                 new_disjunc = get_new_disjunc(i, j, mask, num_trap + 1, -1, grid_w, grid_h)
                 if new_disjunc != []:
                     cnf.append(new_disjunc)

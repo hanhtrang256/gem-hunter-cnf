@@ -12,6 +12,7 @@ class PYSAT_SOLUTION:
         if solver.solve():
             # print("Satisfied")
             model = solver.get_model()
+            # print("model", model)
             end_time = time.time()
 
             time_taken = (end_time - start_time) * 1000
