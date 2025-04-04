@@ -1,18 +1,18 @@
 10 x 10
-1547 clauses!
+1563 clauses!
 67 empty cells!
 Complete board solver by PYSAT!
 G 1 G T 1 G T G G G 
 G 2 T G 2 1 1 1 G G 
-T 3 3 T 1 G G G G T 
+T 3 3 T 1 G G G G G 
 1 G T 5 3 1 G G G 1 
-G G T T T 3 G G 1 G 
-2 T G T 4 T T G 2 T 
-G T T G 2 G G T G 1 
+G G T T T 3 G G 1 T 
+2 T G T 4 T T G 2 G 
+G T T G 2 G G G T 1 
 1 G T 3 G G T G 2 G 
 G 1 3 T G T T 2 1 T 
 G G G T 3 2 2 G 1 G 
-1.1230 ms!
+56.4942 ms!
 
 Complete board solver by Backtrack!
 G 1 G T 1 G T G G T 
@@ -25,6 +25,6 @@ T G T G 2 G T T T 1
 1 G T 3 G G T G 2 G 
 G 1 3 T G T T 2 1 G 
 G G G T 3 2 2 G 1 T 
-53.0090 ms!
+51.9998 ms!
 
 Brute Force took too long to solve!

@@ -9,6 +9,12 @@ class PYSAT_SOLUTION:
     def print_solution(grid, grid_w, grid_h, cnf, fout):
         start_time = time.time()
         solver = Solver(bootstrap_with = cnf)
+
+        dupl = find_dup_clauses(cnf.clauses)
+        
+        if dupl != None:
+            print("Duplicate clauses detected", dupl)
+
         if solver.solve():
             # print("Satisfied")
             model = solver.get_model()

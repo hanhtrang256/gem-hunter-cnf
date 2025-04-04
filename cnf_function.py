@@ -1,6 +1,14 @@
 from grid_function import *
 from pysat.formula import CNF
 
+# Find duplicate clauses in the CNF
+def find_dup_clauses(clauses):
+    for i in range(len(clauses)): 
+        for j in range(i + 1, len(clauses)):
+            if clauses[i] == clauses[j]:
+                return clauses[i]
+    return None
+
 # This function checks if the CNF is satisfied in the current model
 # All clauses true -> return 1
 # Some clauses false -> return 0
@@ -107,9 +115,9 @@ def generate_CNF(grid, grid_w, grid_h):
                     cnf.append(new_disjunc)
     
     # Remove duplicate clauses
-    seen = set()
-    cnf.clauses = [clause for clause in cnf.clauses if frozenset(clause) not in seen and not seen.add(frozenset(clause))]
-    return cnf
+    factor_clauses = list(map(list, set(map(tuple, cnf.clauses))))
+    factor_cnf = CNF(from_clauses = factor_clauses)
+    return factor_cnf
 
 # Optimize the CNF clauses by assigning some known information in the knowledge base
 # and delete the clauses that are already true

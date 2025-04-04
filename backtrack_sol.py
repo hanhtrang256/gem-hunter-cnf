@@ -157,6 +157,11 @@ class BACKTRACK_SOLUTION:
 
         # Delete unnecessary clauses
         use_clauses = optimize_clause(grid, grid_w, grid_h, use_clauses, model)
+
+        dupl = find_dup_clauses(use_clauses)
+        if dupl != None:
+            print("Duplicate clause detected", dupl)
+
         
         start_time = time.time()
         found_sol = BACKTRACK_SOLUTION.backtrack(grid, grid_w, grid_h, 0, unk_cells, use_clauses, model, fout)

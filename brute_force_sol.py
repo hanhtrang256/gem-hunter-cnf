@@ -35,6 +35,10 @@ class BF_SOLUTION:
         # Delete unnecessary clauses
         use_clauses = optimize_clause(grid, grid_w, grid_h, use_clauses, model)
 
+        dupl = find_dup_clauses(use_clauses)
+        if dupl != None:
+            print("Duplicate clause detected", dupl)
+
         empty_id = [None] * (grid_w * grid_h + 2)
         id = 0
         for i in range(grid_h):
