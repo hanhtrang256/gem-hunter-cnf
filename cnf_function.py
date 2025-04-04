@@ -141,7 +141,7 @@ def optimize_clause(grid, grid_w, grid_h, clauses, model):
     # New clause
     new_clause = [] 
     for i in range(len(clauses)): 
-        if deleted[i]:
+        if deleted[i] or (clauses[i] in new_clause):
             continue
         clause = []
         for var in clauses[i]:
