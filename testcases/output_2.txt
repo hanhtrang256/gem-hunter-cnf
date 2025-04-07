@@ -8,7 +8,7 @@ G T 6 T T G
 2 2 G T T 2 
 T 3 4 5 4 2 
 2 T T T T G 
-0.0000 ms!
+0.9844 ms!
 
 Complete board solver by Backtrack!
 T T T 5 T T 
@@ -17,7 +17,7 @@ G T 6 T T G
 2 2 G T T 2 
 T 3 4 5 4 2 
 2 T T T T G 
-8.8937 ms!
+10.8814 ms!
 
 Complete board solver by Brute-Force!
 T T T 5 T T 
@@ -26,4 +26,4 @@ G T 6 T T G
 2 2 G T T 2 
 T 3 4 5 4 2 
 2 T T T T G 
-20.0150 ms!
+25.6071 ms!
