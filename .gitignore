@@ -1,4 +1,4 @@
-ECHO is on.
 __pycache__
+*.pdf
 Gem-Hunter-Report.pdf
 grid_generate.py
