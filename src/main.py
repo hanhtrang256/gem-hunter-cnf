@@ -1,8 +1,10 @@
-from grid_function import *
-from cnf_function import *
-from pysat_sol import *
-from brute_force_sol import *
-from backtrack_sol import *
+# from util.grid_function import *
+# from util.cnf_function import *
+from util import *
+from algorithm import *
+# from pysat_sol import *
+# from brute_force_sol import *
+# from backtrack_sol import *
 from grid_generate import *
 import sys
 
@@ -11,7 +13,7 @@ NFILE = 6
 def solve(id_file):
     print(f'File input_{id_file} is read!', end=" ")
     # Read grid from file
-    grid = read_grid_file(f'testcases/input_{id_file}.txt')
+    grid = read_grid_file(f'../testcases/input_{id_file}.txt')
     grid_h = len(grid)
     grid_w = len(grid[0]) 
 
@@ -24,7 +26,7 @@ def solve(id_file):
     # Generate the CNF clauses. Duplicate clauses are removed inside the function.
     cnf = generate_CNF(grid, grid_w, grid_h)
 
-    fout = open(str(f'testcases/output_{id_file}.txt'), "w")
+    fout = open(str(f'../testcases/output_{id_file}.txt'), "w")
     fout.write(f'{grid_h} x {grid_w}\n')
     fout.write(f'{len(cnf.clauses)} clauses!\n')
     fout.write(f'{num_empty} empty cells!\n')

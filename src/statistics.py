@@ -45,7 +45,7 @@ def show_experiments():
     print_header_line(fout)
     # Read each output file
     for i in range(1, main.NFILE + 1):
-        with open(str(f'testcases/output_{i}.txt')) as f:
+        with open(str(f'../testcases/output_{i}.txt')) as f:
             row, mul_sign, col = [x for x in next(f).split()]
             
             nclauses, tmp = [x for x in next(f).split()]

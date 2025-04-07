@@ -1,4 +1,4 @@
-from grid_function import *
+from util import *
 import random
 grid_width = 30
 grid_height = 30

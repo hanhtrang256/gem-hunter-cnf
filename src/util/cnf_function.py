@@ -1,4 +1,4 @@
-from grid_function import *
+from util.grid_function import *
 from pysat.formula import CNF
 
 # Find duplicate clauses in the CNF

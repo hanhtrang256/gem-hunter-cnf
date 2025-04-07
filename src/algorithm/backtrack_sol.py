@@ -1,5 +1,4 @@
-from grid_function import *
-from cnf_function import *
+from util import *
 import time
 
 # A class for backtracking solution
